@@ -1,12 +1,12 @@
 export default function Login() {
   return (
-    <>
-      <div className="container mt-5 mb-5 pt-5">
-        <div className="row justify-content-center">
-          <div className="col-lg-6 col-md-8 col-12"></div>
-
+    <div className="container mt-5 mb-5 pt-5">
+      <div className="row justify-content-center">
+        
+        {/* По-тясна колона за по-добра визия при малко полета */}
+        <div className="col-lg-5 col-md-7 col-12">
           <div className="booking bg-white p-5 rounded shadow">
-            <h3 className="mb-4 text-center">Добави нов филм</h3>
+            <h3 className="mb-4 text-center">Вход</h3>
 
             <form
               className="booking-form row"
@@ -14,91 +14,47 @@ export default function Login() {
               action="#"
               method="post"
             >
-              {/* Поле за Заглавие */}
-              <div className="col-lg-6 col-12">
-                <label htmlFor="title" className="form-label">
-                  Заглавие
+              {/* Поле за имейл */}
+              <div className="col-12 mb-3">
+                <label htmlFor="email" className="form-label">
+                  Имейл
                 </label>
                 <input
-                  type="text"
-                  name="title"
-                  id="title"
+                  type="email"
+                  name="email"
+                  id="email"
                   className="form-control"
-                  placeholder="Име на филма"
+                  placeholder="your@email.com"
                   required
                 />
               </div>
 
-              {/* Поле за Година */}
-              <div className="col-lg-6 col-12">
-                <label htmlFor="year" className="form-label">
-                  Година на издаване
+              {/* Парола */}
+              <div className="col-12 mb-4">
+                <label htmlFor="password" className="form-label">
+                  Парола
                 </label>
                 <input
-                  type="number"
-                  name="year"
-                  id="year"
+                  type="password"
+                  name="password"
+                  id="password"
                   className="form-control"
-                  placeholder="Напр. 2024"
+                  placeholder="******"
                   required
                 />
               </div>
 
-              {/* Поле за Жанр */}
-              <div className="col-lg-6 col-12">
-                <label htmlFor="genre" className="form-label">
-                  Жанр
-                </label>
-                <input
-                  type="text"
-                  name="genre"
-                  id="genre"
-                  className="form-control"
-                  placeholder="Екшън, Драма, Комедия..."
-                  required
-                />
-              </div>
-
-              {/* Поле за Снимка (URL) */}
-              <div className="col-lg-6 col-12">
-                <label htmlFor="imageUrl" className="form-label">
-                  Постер (URL адрес)
-                </label>
-                <input
-                  type="url"
-                  name="imageUrl"
-                  id="imageUrl"
-                  className="form-control"
-                  placeholder="https://..."
-                  required
-                />
-              </div>
-
-              {/* Поле за Описание */}
+              {/* Бутон за вход */}
               <div className="col-12">
-                <label htmlFor="description" className="form-label">
-                  Описание / Резюме
-                </label>
-                <textarea
-                  className="form-control"
-                  rows="4"
-                  id="description"
-                  name="description"
-                  placeholder="Кратко резюме на сюжета..."
-                  required
-                ></textarea>
-              </div>
-
-              {/* Бутон за запазване */}
-              <div className="col-lg-4 col-12 ms-auto mt-3">
                 <button type="submit" className="form-control">
-                  Създай филм
+                  Влез в профила
                 </button>
               </div>
             </form>
           </div>
         </div>
+        
       </div>
-    </>
+    </div>
   );
 }
