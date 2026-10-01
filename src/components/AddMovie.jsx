@@ -6,7 +6,7 @@ export default function AddMovie() {
           <div className="col-lg-6 col-md-8 col-12"></div>
 
           <div className="booking bg-white p-5 rounded shadow">
-            <h3 className="mb-4 text-center">Добави нов филм</h3>
+            <h3 className="mb-4 text-center">Add Movie</h3>
 
             <form
               className="booking-form row"
@@ -14,55 +14,51 @@ export default function AddMovie() {
               action="#"
               method="post"
             >
-              {/* Поле за Заглавие */}
               <div className="col-lg-6 col-12">
                 <label htmlFor="title" className="form-label">
-                  Заглавие
+                  Title
                 </label>
                 <input
                   type="text"
                   name="title"
                   id="title"
                   className="form-control"
-                  placeholder="Име на филма"
+                  placeholder="Movie title"
                   required
                 />
               </div>
 
-              {/* Поле за Година */}
               <div className="col-lg-6 col-12">
                 <label htmlFor="year" className="form-label">
-                  Година на издаване
+                  Year
                 </label>
                 <input
                   type="number"
                   name="year"
                   id="year"
                   className="form-control"
-                  placeholder="Напр. 2024"
+                  placeholder="ex. 2024"
                   required
                 />
               </div>
 
-              {/* Поле за Жанр */}
               <div className="col-lg-6 col-12">
                 <label htmlFor="genre" className="form-label">
-                  Жанр
+                  Genre
                 </label>
                 <input
                   type="text"
                   name="genre"
                   id="genre"
                   className="form-control"
-                  placeholder="Екшън, Драма, Комедия..."
+                  placeholder="Action, Drama, Comedy..."
                   required
                 />
               </div>
 
-              {/* Поле за Снимка (URL) */}
               <div className="col-lg-6 col-12">
                 <label htmlFor="imageUrl" className="form-label">
-                  Постер (URL адрес)
+                  Poster (URL)
                 </label>
                 <input
                   type="url"
@@ -74,10 +70,9 @@ export default function AddMovie() {
                 />
               </div>
 
-              {/* Поле за Описание */}
               <div className="col-12">
                 <label htmlFor="description" className="form-label">
-                  Описание / Резюме
+                  Description / Resume
                 </label>
                 <textarea
                   className="form-control"
@@ -89,10 +84,9 @@ export default function AddMovie() {
                 ></textarea>
               </div>
 
-              {/* Бутон за запазване */}
               <div className="col-lg-4 col-12 ms-auto mt-3">
                 <button type="submit" className="form-control">
-                  Създай филм
+                  Add Movie
                 </button>
               </div>
             </form>

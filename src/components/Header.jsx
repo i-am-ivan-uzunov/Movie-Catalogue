@@ -24,7 +24,7 @@ export default function Navbar() {
           </button>
 
           <a className="navbar-brand" href="index.html">
-            Crispy Kitchen
+            FlickHub
           </a>
 
           <div className="d-lg-none">
@@ -34,7 +34,18 @@ export default function Navbar() {
               data-bs-toggle="modal"
               data-bs-target="#BookingModal"
             >
-              Reservation
+              Login
+            </button>
+          </div>
+
+          <div className="d-lg-none">
+            <button
+              type="button"
+              className="custom-btn btn btn-danger"
+              data-bs-toggle="modal"
+              data-bs-target="#BookingModal"
+            >
+              Login
             </button>
           </div>
 

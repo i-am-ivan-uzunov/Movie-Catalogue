@@ -5,7 +5,7 @@ export default function Register() {
         <div className="row justify-content-center">
           <div className="col-lg-6 col-md-8 col-12">
             <div className="booking bg-white p-5 rounded shadow">
-              <h3 className="mb-4 text-center">Регистрация</h3>
+              <h3 className="mb-4 text-center">Registration</h3>
 
               <form
                 className="booking-form row"
@@ -13,40 +13,37 @@ export default function Register() {
                 action="#"
                 method="post"
               >
-                {/* Поле за име */}
                 <div className="col-lg-6 col-12">
                   <label htmlFor="firstName" className="form-label">
-                    Име
+                    First Name
                   </label>
                   <input
                     type="text"
                     name="firstName"
                     id="firstName"
                     className="form-control"
-                    placeholder="Име"
+                    placeholder="First name"
                     required
                   />
                 </div>
 
-                {/* Поле за фамилия */}
                 <div className="col-lg-6 col-12">
                   <label htmlFor="lastName" className="form-label">
-                    Фамилия
+                    Last Name
                   </label>
                   <input
                     type="text"
                     name="lastName"
                     id="lastName"
                     className="form-control"
-                    placeholder="Фамилия"
+                    placeholder="Last name"
                     required
                   />
                 </div>
 
-                {/* Поле за имейл */}
                 <div className="col-lg-6 col-12">
                   <label htmlFor="email" className="form-label">
-                    Имейл
+                    Email
                   </label>
                   <input
                     type="email"
@@ -58,10 +55,9 @@ export default function Register() {
                   />
                 </div>
 
-                {/* Поле за Снимка (URL) */}
                 <div className="col-lg-6 col-12">
                   <label htmlFor="imageUrl" className="form-label">
-                    Профилна снимка (URL адрес)
+                    Profile picture
                   </label>
                   <input
                     type="url"
@@ -73,10 +69,9 @@ export default function Register() {
                   />
                 </div>
 
-                {/* Парола */}
                 <div className="col-lg-6 col-12">
                   <label htmlFor="password" className="form-label">
-                    Парола
+                    Password
                   </label>
                   <input
                     type="password"
@@ -88,10 +83,9 @@ export default function Register() {
                   />
                 </div>
 
-                {/* Повторна парола */}
                 <div className="col-lg-6 col-12">
                   <label htmlFor="repass" className="form-label">
-                    Повтори парола
+                    Confirm Password
                   </label>
                   <input
                     type="password"
@@ -103,10 +97,9 @@ export default function Register() {
                   />
                 </div>
 
-                {/* Бутон за запазване */}
                 <div className="col-lg-4 col-12 ms-auto mt-3">
                   <button type="submit" className="form-control">
-                    Регистрация
+                    Register
                   </button>
                 </div>
               </form>
