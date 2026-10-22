@@ -1,103 +1,78 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
-export default function Navbar() {
+export default function Header() {
   const [isNavOpen, setIsNavOpen] = useState(false);
 
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
   };
+
+  const closeNav = () => {
+    setIsNavOpen(false);
+  };
+
   return (
-    <>
-      <nav className="navbar navbar-expand-lg bg-white shadow-lg">
-        <div className="container">
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-            onClick={toggleNav}
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
+    <nav className="navbar navbar-expand-lg bg-white shadow-lg">
+      <div className="container">
+        <button
+          className="navbar-toggler"
+          type="button"
+          onClick={toggleNav}
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
 
-          <a className="navbar-brand" href="index.html">
-            FlickHub
-          </a>
+        <Link className="navbar-brand" to="/" onClick={closeNav}>
+          FlickHub
+        </Link>
 
-          <div className="d-lg-none">
-            <button
-              type="button"
-              className="custom-btn btn btn-danger"
-              data-bs-toggle="modal"
-              data-bs-target="#BookingModal"
-            >
-              Login
-            </button>
-          </div>
-
-          <div className="d-lg-none">
-            <button
-              type="button"
-              className="custom-btn btn btn-danger"
-              data-bs-toggle="modal"
-              data-bs-target="#BookingModal"
-            >
-              Login
-            </button>
-          </div>
-
-          <div
-            className={`collapse navbar-collapse ${isNavOpen ? "show" : ""}`}
-            id="navbarNav"
-          >
-            <ul className="navbar-nav mx-auto">
-              <li className="nav-item">
-                <a className="nav-link" href="index.html">
-                  Home
-                </a>
-              </li>
-
-              <li className="nav-item">
-                <a className="nav-link" href="about.html">
-                  Story
-                </a>
-              </li>
-
-              <li className="nav-item">
-                <a className="nav-link" href="menu.html">
-                  Menu
-                </a>
-              </li>
-
-              <li className="nav-item">
-                <a className="nav-link" href="news.html">
-                  Our Updates
-                </a>
-              </li>
-
-              <li className="nav-item">
-                <a className="nav-link" href="contact.html">
-                  Contact
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div className="d-none d-lg-block">
-            <button
-              type="button"
-              className="custom-btn btn btn-danger"
-              data-bs-toggle="modal"
-              data-bs-target="#BookingModal"
-            >
-              Reservation
-            </button>
-          </div>
+        <div className="d-lg-none d-flex gap-2">
+          <Link to="/login" className="custom-btn btn btn-danger" onClick={closeNav}>
+            Login
+          </Link>
         </div>
-      </nav>
-    </>
+
+        <div
+          className={`collapse navbar-collapse ${isNavOpen ? "show" : ""}`}
+          id="navbarNav"
+        >
+          <ul className="navbar-nav mx-auto">
+            <li className="nav-item">
+              <Link className="nav-link" to="/" onClick={closeNav}>
+                Home
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link className="nav-link" to="/catalogue" onClick={closeNav}>
+                Catalogue
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link className="nav-link" to="/news" onClick={closeNav}>
+                News
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link className="nav-link" to="/add-movie" onClick={closeNav}>
+                Add Movie
+              </Link>
+            </li>
+          </ul>
+        </div>
+
+        <div className="d-none d-lg-flex gap-3">
+          <Link to="/login" className="custom-btn btn btn-danger">
+            Login
+          </Link>
+          <Link to="/register" className="custom-btn btn btn-danger">
+            Register
+          </Link>
+        </div>
+      </div>
+    </nav>
   );
 }
