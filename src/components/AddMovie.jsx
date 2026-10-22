@@ -1,20 +1,147 @@
-export default function AddMovie() {
-  return (
-    <>
-      <div className="container mt-5 mb-5 pt-5">
-        <div className="row justify-content-center">
-          <div className="col-lg-6 col-md-8 col-12"></div>
+import { useState } from "react";
+import { supabase } from "../supabaseClient";
 
+export default function AddMovie() {
+  const [formData, setFormData] = useState({
+    title: "",
+    year: "",
+    genre: "",
+    imageUrl: "",
+    description: "",
+  });
+
+  const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
+  const [message, setMessage] = useState("");
+
+  const validate = (name, value) => {
+    let errorMsg = "";
+
+    if (name === "title" && value.trim().length < 2) {
+      errorMsg = "Title must be at least 2 characters long.";
+    }
+    if (
+      name === "year" &&
+      (Number(value) < 1888 || Number(value) > new Date().getFullYear())
+    ) {
+      errorMsg = "Please enter a valid year.";
+    }
+    if (name === "genre" && value.trim().length < 3) {
+      errorMsg = "Genre must be at least 3 characters long.";
+    }
+    if (name === "imageUrl" && !/^https?:\/\/.+/.test(value)) {
+      errorMsg =
+        "Please enter a valid URL (starting with http:// or https://).";
+    }
+    if (name === "description" && value.trim().length < 10) {
+      errorMsg = "Description must be at least 10 characters long.";
+    }
+
+    return errorMsg;
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+
+    setTouched({
+      ...touched,
+      [name]: true,
+    });
+
+    setErrors({
+      ...errors,
+      [name]: validate(name, value),
+    });
+  };
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+
+    setTouched({
+      ...touched,
+      [name]: true,
+    });
+
+    setErrors({
+      ...errors,
+      [name]: validate(name, value),
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const newErrors = {};
+    let isValid = true;
+
+    Object.keys(formData).forEach((key) => {
+      const error = validate(key, formData[key]);
+      if (error) {
+        newErrors[key] = error;
+        isValid = false;
+      }
+    });
+
+    setErrors(newErrors);
+
+    const allTouched = {};
+    Object.keys(formData).forEach((key) => {
+      allTouched[key] = true;
+    });
+    setTouched(allTouched);
+
+    if (!isValid) return;
+
+    const { error } = await supabase.from("movies").insert([
+      {
+        title: formData.title,
+        year: parseInt(formData.year),
+        genre: formData.genre,
+        imageUrl: formData.imageUrl,
+        description: formData.description,
+      },
+    ]);
+
+    if (error) {
+      setMessage("Error adding movie: " + error.message);
+    } else {
+      setMessage("Movie added successfully!");
+      setFormData({
+        title: "",
+        year: "",
+        genre: "",
+        imageUrl: "",
+        description: "",
+      });
+      setTouched({});
+      setErrors({});
+    }
+  };
+
+  return (
+    <div className="container mt-5 mb-5 pt-5">
+      <div className="row justify-content-center">
+        <div className="col-lg-6 col-md-8 col-12">
           <div className="booking bg-white p-5 rounded shadow">
             <h3 className="mb-4 text-center">Add Movie</h3>
 
+            {message && (
+              <div className="alert alert-info text-center" role="alert">
+                {message}
+              </div>
+            )}
+
             <form
               className="booking-form row"
-              role="form"
-              action="#"
-              method="post"
+              onSubmit={handleSubmit}
+              noValidate
             >
-              <div className="col-lg-6 col-12">
+              <div className="col-lg-6 col-12 mb-3">
                 <label htmlFor="title" className="form-label">
                   Title
                 </label>
@@ -22,13 +149,18 @@ export default function AddMovie() {
                   type="text"
                   name="title"
                   id="title"
-                  className="form-control"
+                  className={`form-control ${touched.title && errors.title ? "is-invalid" : ""}`}
                   placeholder="Movie title"
-                  required
+                  value={formData.title}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                 />
+                {touched.title && errors.title && (
+                  <div className="invalid-feedback">{errors.title}</div>
+                )}
               </div>
 
-              <div className="col-lg-6 col-12">
+              <div className="col-lg-6 col-12 mb-3">
                 <label htmlFor="year" className="form-label">
                   Year
                 </label>
@@ -36,13 +168,18 @@ export default function AddMovie() {
                   type="number"
                   name="year"
                   id="year"
-                  className="form-control"
+                  className={`form-control ${touched.year && errors.year ? "is-invalid" : ""}`}
                   placeholder="ex. 2024"
-                  required
+                  value={formData.year}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                 />
+                {touched.year && errors.year && (
+                  <div className="invalid-feedback">{errors.year}</div>
+                )}
               </div>
 
-              <div className="col-lg-6 col-12">
+              <div className="col-lg-6 col-12 mb-3">
                 <label htmlFor="genre" className="form-label">
                   Genre
                 </label>
@@ -50,13 +187,18 @@ export default function AddMovie() {
                   type="text"
                   name="genre"
                   id="genre"
-                  className="form-control"
+                  className={`form-control ${touched.genre && errors.genre ? "is-invalid" : ""}`}
                   placeholder="Action, Drama, Comedy..."
-                  required
+                  value={formData.genre}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                 />
+                {touched.genre && errors.genre && (
+                  <div className="invalid-feedback">{errors.genre}</div>
+                )}
               </div>
 
-              <div className="col-lg-6 col-12">
+              <div className="col-lg-6 col-12 mb-3">
                 <label htmlFor="imageUrl" className="form-label">
                   Poster (URL)
                 </label>
@@ -64,24 +206,34 @@ export default function AddMovie() {
                   type="url"
                   name="imageUrl"
                   id="imageUrl"
-                  className="form-control"
+                  className={`form-control ${touched.imageUrl && errors.imageUrl ? "is-invalid" : ""}`}
                   placeholder="https://..."
-                  required
+                  value={formData.imageUrl}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                 />
+                {touched.imageUrl && errors.imageUrl && (
+                  <div className="invalid-feedback">{errors.imageUrl}</div>
+                )}
               </div>
 
-              <div className="col-12">
+              <div className="col-12 mb-3">
                 <label htmlFor="description" className="form-label">
                   Description / Resume
                 </label>
                 <textarea
-                  className="form-control"
+                  className={`form-control ${touched.description && errors.description ? "is-invalid" : ""}`}
                   rows="4"
                   id="description"
                   name="description"
-                  placeholder="Кратко резюме на сюжета..."
-                  required
+                  placeholder="Brief summary of the plot..."
+                  value={formData.description}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                 ></textarea>
+                {touched.description && errors.description && (
+                  <div className="invalid-feedback">{errors.description}</div>
+                )}
               </div>
 
               <div className="col-lg-4 col-12 ms-auto mt-3">
@@ -93,6 +245,6 @@ export default function AddMovie() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
