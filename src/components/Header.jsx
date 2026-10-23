@@ -31,6 +31,9 @@ export default function Header() {
           <Link to="/login" className="custom-btn btn btn-danger" onClick={closeNav}>
             Login
           </Link>
+          <Link to="/register" className="custom-btn btn btn-danger" onClick={closeNav}>
+            Register
+          </Link>
         </div>
 
         <div
