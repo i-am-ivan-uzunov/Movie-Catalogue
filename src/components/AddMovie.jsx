@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { supabase } from "../supabaseClient";
+import { AuthContext } from "../contexts/AuthContext";
 
 const GENRES = [
   "Action",
@@ -23,6 +24,8 @@ const GENRES = [
 ];
 
 export default function AddMovie() {
+  const { user } = useContext(AuthContext);
+  
   const [formData, setFormData] = useState({
     title: "",
     year: "",
@@ -147,6 +150,7 @@ export default function AddMovie() {
         genre: formData.genre.join(", "),
         imageUrl: formData.imageUrl,
         description: formData.description,
+        owner_id: user.id,
       },
     ]);
 
@@ -174,7 +178,7 @@ export default function AddMovie() {
             <h3 className="mb-4 text-center">Add Movie</h3>
 
             {message && (
-              <div className="alert alert-info text-center" role="alert">
+              <div className={`alert ${message.includes("successful") ? "alert-success" : "alert-danger"} text-center`} role="alert">
                 {message}
               </div>
             )}
