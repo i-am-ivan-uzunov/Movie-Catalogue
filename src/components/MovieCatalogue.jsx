@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 
 export default function MovieCatalogue() {
@@ -7,12 +8,14 @@ export default function MovieCatalogue() {
 
   useEffect(() => {
     async function fetchMovies() {
-      const { data, error } = await supabase.from("movies").select("*");
+      const { data, error } = await supabase
+        .from("movies")
+        .select("*")
+        .order("id", { ascending: false });
 
       if (!error && data) {
         setMovies(data);
       }
-
       setLoading(false);
     }
 
@@ -20,54 +23,75 @@ export default function MovieCatalogue() {
   }, []);
 
   return (
-    <section className="menu section-padding">
-      <div className="container">
-        <div className="row">
-          <div className="col-12">
-            <h2 className="text-center mb-lg-5 mb-4">Movie Catalogue</h2>
-          </div>
+    <div className="container mt-5 mb-5 pt-5">
+      <h2 className="text-center mb-5 fw-bold text-white">Movie Catalogue</h2>
 
-          {loading && (
-            <div className="col-12 text-center">
-              <h4>Loading movies...</h4>
-            </div>
-          )}
+      {loading ? (
+        <div className="text-center text-white">
+          <h4>Loading movies...</h4>
+        </div>
+      ) : movies.length === 0 ? (
+        <div className="text-center text-white">
+          <p className="lead">No movies found in the catalogue.</p>
+          <Link
+            to="/add-movie"
+            className="btn btn-warning text-dark fw-bold mt-3"
+          >
+            Add the first movie
+          </Link>
+        </div>
+      ) : (
+        <div className="row justify-content-center">
+          {movies.map((movie) => (
+            <div key={movie.id} className="col-lg-4 col-md-6 col-12 mb-4">
+              <div className="card h-100 border-0 bg-dark shadow">
+                <div className="position-relative">
+                  <img
+                    src={
+                      movie.imageUrl ||
+                      "https://via.placeholder.com/400x600?text=No+Image"
+                    }
+                    className="card-img-top"
+                    alt={movie.title}
+                    style={{ height: "400px", objectFit: "cover" }}
+                    onError={(e) => {
+                      e.target.src =
+                        "https://via.placeholder.com/400x600?text=No+Image";
+                    }}
+                  />
+                  <span className="badge bg-warning text-dark position-absolute top-0 end-0 m-3 fs-6 shadow">
+                    {movie.genre}
+                  </span>
+                </div>
 
-          {!loading && movies.length === 0 && (
-            <div className="col-12 text-center">
-              <h4>No movies found. Please add some!</h4>
-            </div>
-          )}
-
-          {!loading &&
-            movies.map((movie) => (
-              <div key={movie.id} className="col-lg-4 col-md-6 col-12 mb-4">
-                <div className="menu-thumb">
-                  <div className="menu-image-wrap">
-                    <img
-                      src={movie.imageUrl}
-                      className="img-fluid menu-image"
-                      alt={movie.title}
-                      style={{
-                        height: "450px",
-                        objectFit: "cover",
-                        width: "100%",
-                      }}
-                    />
-                    <span className="menu-tag bg-warning">{movie.genre}</span>
-                  </div>
-
-                  <div className="menu-info d-flex flex-wrap align-items-center">
-                    <h4 className="mb-0">{movie.title}</h4>
-                    <span className="price-tag bg-white shadow-lg ms-4">
+                <div className="card-body d-flex flex-column text-start p-4">
+                  <div className="d-flex justify-content-between align-items-start mb-3">
+                    <h4
+                      className="card-title text-truncate mb-0 text-white"
+                      style={{ maxWidth: "75%" }}
+                      title={movie.title}
+                    >
+                      {movie.title}
+                    </h4>
+                    <span className="badge bg-secondary fs-6 shadow-sm">
                       {movie.year}
                     </span>
                   </div>
+
+                  <div className="mt-auto pt-3">
+                    <Link
+                      to={`/movies/${movie.id}`}
+                      className="btn btn-warning text-dark fw-bold w-100 py-2"
+                    >
+                      View Details
+                    </Link>
+                  </div>
                 </div>
               </div>
-            ))}
+            </div>
+          ))}
         </div>
-      </div>
-    </section>
+      )}
+    </div>
   );
 }

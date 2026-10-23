@@ -1,0 +1,124 @@
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { supabase } from "../../supabaseClient";
+import styles from "./Home.module.css";
+
+export default function Home() {
+  const [latestMovies, setLatestMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchLatestMovies() {
+      const { data, error } = await supabase
+        .from("movies")
+        .select("*")
+        .order("id", { ascending: false })
+        .limit(3);
+
+      if (!error && data) {
+        setLatestMovies(data);
+      }
+
+      setLoading(false);
+    }
+
+    fetchLatestMovies();
+  }, []);
+
+  return (
+    <>
+      <section
+        className={`text-white text-center py-5 mb-5 shadow ${styles.heroSection}`}
+      >
+        <div className="container">
+          <h1 className="display-3 fw-bold mb-4">Welcome to FlickHub</h1>
+          <p className="lead mb-5">
+            Your ultimate destination to discover, share, and track the best
+            movies.
+          </p>
+          <Link
+            to="/catalogue"
+            className="btn btn-warning text-dark btn-lg px-5 py-3 rounded-pill fw-bold shadow"
+          >
+            Explore All Movies
+          </Link>
+        </div>
+      </section>
+
+      <section className="container mb-5 pb-5">
+        <h2 className="text-center mb-5 fw-bold text-white">Recently Added</h2>
+
+        {loading ? (
+          <div className="text-center text-white">
+            <h4>Loading latest movies...</h4>
+          </div>
+        ) : latestMovies.length === 0 ? (
+          <div className="text-center text-white">
+            <p className="lead">
+              No movies added yet. Be the first to add one!
+            </p>
+            <Link
+              to="/add-movie"
+              className="btn btn-warning text-dark fw-bold mt-3"
+            >
+              Add Movie
+            </Link>
+          </div>
+        ) : (
+          <div className="row justify-content-center">
+            {latestMovies.map((movie) => (
+              <div key={movie.id} className="col-lg-4 col-md-6 col-12 mb-4">
+                <div
+                  className={`card h-100 border-0 bg-dark shadow ${styles.movieCard}`}
+                >
+                  <div className="position-relative">
+                    <img
+                      src={
+                        movie.imageUrl ||
+                        "https://via.placeholder.com/400x600?text=No+Image"
+                      }
+                      className="card-img-top"
+                      alt={movie.title}
+                      style={{ height: "400px", objectFit: "cover" }}
+                      onError={(e) => {
+                        e.target.src =
+                          "https://via.placeholder.com/400x600?text=No+Image";
+                      }}
+                    />
+                    <span className="badge bg-warning text-dark position-absolute top-0 end-0 m-3 fs-6 shadow">
+                      {movie.genre}
+                    </span>
+                  </div>
+
+                  <div className="card-body d-flex flex-column text-start p-4">
+                    <div className="d-flex justify-content-between align-items-start mb-3">
+                      <h4
+                        className="card-title text-truncate mb-0 text-white"
+                        style={{ maxWidth: "75%" }}
+                        title={movie.title}
+                      >
+                        {movie.title}
+                      </h4>
+                      <span className="badge bg-secondary fs-6 shadow-sm">
+                        {movie.year}
+                      </span>
+                    </div>
+
+                    <div className="mt-auto pt-3">
+                      <Link
+                        to={`/movies/${movie.id}`}
+                        className="btn btn-warning text-dark fw-bold w-100 py-2"
+                      >
+                        View Details
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+    </>
+  );
+}

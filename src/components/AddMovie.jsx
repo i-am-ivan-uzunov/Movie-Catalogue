@@ -25,7 +25,7 @@ const GENRES = [
 
 export default function AddMovie() {
   const { user } = useContext(AuthContext);
-  
+
   const [formData, setFormData] = useState({
     title: "",
     year: "",
@@ -44,14 +44,18 @@ export default function AddMovie() {
     if (name === "title" && value.trim().length < 2) {
       errorMsg = "Title must be at least 2 characters long.";
     }
-    if (name === "year" && (Number(value) < 1888 || Number(value) > new Date().getFullYear())) {
+    if (
+      name === "year" &&
+      (Number(value) < 1888 || Number(value) > new Date().getFullYear())
+    ) {
       errorMsg = "Please enter a valid year.";
     }
     if (name === "genre" && value.length === 0) {
       errorMsg = "Please select at least one genre.";
     }
     if (name === "imageUrl" && !/^https?:\/\/.+/.test(value)) {
-      errorMsg = "Please enter a valid URL (starting with http:// or https://).";
+      errorMsg =
+        "Please enter a valid URL (starting with http:// or https://).";
     }
     if (name === "description" && value.trim().length < 10) {
       errorMsg = "Description must be at least 10 characters long.";
@@ -174,18 +178,25 @@ export default function AddMovie() {
     <div className="container mt-5 mb-5 pt-5">
       <div className="row justify-content-center">
         <div className="col-lg-8 col-12">
-          <div className="booking bg-white p-5 rounded shadow">
-            <h3 className="mb-4 text-center">Add Movie</h3>
+          <div className="bg-dark p-5 rounded shadow-lg border border-secondary">
+            <h3 className="mb-4 text-center text-white fw-bold">Add Movie</h3>
 
             {message && (
-              <div className={`alert ${message.includes("successful") ? "alert-success" : "alert-danger"} text-center`} role="alert">
+              <div
+                className={`alert ${message.includes("successful") ? "alert-success" : "alert-danger"} text-center`}
+                role="alert"
+              >
                 {message}
               </div>
             )}
 
-            <form className="booking-form row" onSubmit={handleSubmit} noValidate>
+            <form
+              className="booking-form row"
+              onSubmit={handleSubmit}
+              noValidate
+            >
               <div className="col-lg-6 col-12 mb-3">
-                <label htmlFor="title" className="form-label">
+                <label htmlFor="title" className="form-label text-white">
                   Title
                 </label>
                 <input
@@ -204,7 +215,7 @@ export default function AddMovie() {
               </div>
 
               <div className="col-lg-6 col-12 mb-3">
-                <label htmlFor="year" className="form-label">
+                <label htmlFor="year" className="form-label text-white">
                   Year
                 </label>
                 <input
@@ -223,14 +234,17 @@ export default function AddMovie() {
               </div>
 
               <div className="col-12 mb-3">
-                <label className="form-label">Genre</label>
+                <label className="form-label text-white">Genre</label>
                 <div
-                  className={`d-flex flex-wrap gap-3 p-3 rounded ${
-                    touched.genre && errors.genre ? "border border-danger" : "border"
+                  className={`d-flex flex-wrap gap-3 p-3 rounded shadow-sm ${
+                    touched.genre && errors.genre
+                      ? "border border-danger"
+                      : "border border-secondary"
                   }`}
+                  style={{ backgroundColor: "#252525" }}
                 >
                   {GENRES.map((genreItem) => (
-                    <div className="form-check" key={genreItem}>
+                    <div className="form-check text-white" key={genreItem}>
                       <input
                         className="form-check-input"
                         type="checkbox"
@@ -238,8 +252,13 @@ export default function AddMovie() {
                         value={genreItem}
                         checked={formData.genre.includes(genreItem)}
                         onChange={handleGenreChange}
+                        style={{ cursor: "pointer" }}
                       />
-                      <label className="form-check-label" htmlFor={`genre-${genreItem}`}>
+                      <label
+                        className="form-check-label text-white"
+                        htmlFor={`genre-${genreItem}`}
+                        style={{ cursor: "pointer" }}
+                      >
                         {genreItem}
                       </label>
                     </div>
@@ -251,7 +270,7 @@ export default function AddMovie() {
               </div>
 
               <div className="col-12 mb-3">
-                <label htmlFor="imageUrl" className="form-label">
+                <label htmlFor="imageUrl" className="form-label text-white">
                   Poster (URL)
                 </label>
                 <input
@@ -270,7 +289,7 @@ export default function AddMovie() {
               </div>
 
               <div className="col-12 mb-3">
-                <label htmlFor="description" className="form-label">
+                <label htmlFor="description" className="form-label text-white">
                   Description / Resume
                 </label>
                 <textarea
@@ -289,7 +308,10 @@ export default function AddMovie() {
               </div>
 
               <div className="col-lg-4 col-12 ms-auto mt-3">
-                <button type="submit" className="form-control">
+                <button
+                  type="submit"
+                  className="btn btn-warning text-dark fw-bold w-100 py-2"
+                >
                   Add Movie
                 </button>
               </div>

@@ -121,8 +121,8 @@ export default function Register() {
     <div className="container mt-5 mb-5 pt-5">
       <div className="row justify-content-center">
         <div className="col-lg-6 col-md-8 col-12">
-          <div className="booking bg-white p-5 rounded shadow">
-            <h3 className="mb-4 text-center">Registration</h3>
+          <div className="bg-dark p-5 rounded shadow-lg border border-secondary">
+            <h3 className="mb-4 text-center text-white fw-bold">Registration</h3>
 
             {message && (
               <div className={`alert ${message.includes("successful") ? "alert-success" : "alert-danger"} text-center`} role="alert">
@@ -132,7 +132,7 @@ export default function Register() {
 
             <form className="booking-form row" onSubmit={handleSubmit} noValidate>
               <div className="col-lg-6 col-12 mb-3">
-                <label htmlFor="firstName" className="form-label">First Name</label>
+                <label htmlFor="firstName" className="form-label text-white">First Name</label>
                 <input
                   type="text"
                   name="firstName"
@@ -147,7 +147,7 @@ export default function Register() {
               </div>
 
               <div className="col-lg-6 col-12 mb-3">
-                <label htmlFor="lastName" className="form-label">Last Name</label>
+                <label htmlFor="lastName" className="form-label text-white">Last Name</label>
                 <input
                   type="text"
                   name="lastName"
@@ -162,7 +162,7 @@ export default function Register() {
               </div>
 
               <div className="col-lg-6 col-12 mb-3">
-                <label htmlFor="email" className="form-label">Email</label>
+                <label htmlFor="email" className="form-label text-white">Email</label>
                 <input
                   type="email"
                   name="email"
@@ -177,7 +177,7 @@ export default function Register() {
               </div>
 
               <div className="col-lg-6 col-12 mb-3">
-                <label htmlFor="imageUrl" className="form-label">Profile picture</label>
+                <label htmlFor="imageUrl" className="form-label text-white">Profile picture</label>
                 <input
                   type="url"
                   name="imageUrl"
@@ -192,7 +192,7 @@ export default function Register() {
               </div>
 
               <div className="col-lg-6 col-12 mb-3">
-                <label htmlFor="password" className="form-label">Password</label>
+                <label htmlFor="password" className="form-label text-white">Password</label>
                 <input
                   type="password"
                   name="password"
@@ -207,7 +207,7 @@ export default function Register() {
               </div>
 
               <div className="col-lg-6 col-12 mb-3">
-                <label htmlFor="repass" className="form-label">Confirm Password</label>
+                <label htmlFor="repass" className="form-label text-white">Confirm Password</label>
                 <input
                   type="password"
                   name="repass"
@@ -221,8 +221,8 @@ export default function Register() {
                 {touched.repass && errors.repass && <div className="invalid-feedback">{errors.repass}</div>}
               </div>
 
-              <div className="col-lg-4 col-12 ms-auto mt-3">
-                <button type="submit" className="form-control">
+              <div className="col-lg-6 col-12 ms-auto mt-4">
+                <button type="submit" className="btn btn-warning text-dark fw-bold w-100 py-2">
                   Register
                 </button>
               </div>

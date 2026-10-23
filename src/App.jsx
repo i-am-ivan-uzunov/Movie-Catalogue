@@ -1,9 +1,11 @@
 import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import Header from "./components/Header";
-import Home from "./components/Home";
+import Home from "./components/Home/Home";
 import MovieCatalogue from "./components/MovieCatalogue";
+import MovieDetails from "./components/MovieDetails";
 import AddMovie from "./components/AddMovie";
+import EditMovie from "./components/EditMovie";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import AuthGuard from "./guards/AuthGuard";
@@ -16,6 +18,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/catalogue" element={<MovieCatalogue />} />
+        <Route path="/movies/:id" element={<MovieDetails />} />
 
         <Route element={<GuestGuard />}>
           <Route path="/login" element={<Login />} />
@@ -24,6 +27,7 @@ function App() {
 
         <Route element={<AuthGuard />}>
           <Route path="/add-movie" element={<AddMovie />} />
+          <Route path="/movies/:id/edit" element={<EditMovie />} />
         </Route>
       </Routes>
     </AuthProvider>

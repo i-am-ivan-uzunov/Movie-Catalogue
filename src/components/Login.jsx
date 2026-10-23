@@ -80,8 +80,8 @@ export default function Login() {
     <div className="container mt-5 mb-5 pt-5">
       <div className="row justify-content-center">
         <div className="col-lg-5 col-md-7 col-12">
-          <div className="booking bg-white p-5 rounded shadow">
-            <h3 className="mb-4 text-center">Login</h3>
+          <div className="bg-dark p-5 rounded shadow-lg border border-secondary">
+            <h3 className="mb-4 text-center text-white fw-bold">Login</h3>
 
             {message && (
               <div
@@ -98,7 +98,7 @@ export default function Login() {
               noValidate
             >
               <div className="col-12 mb-3">
-                <label htmlFor="email" className="form-label">
+                <label htmlFor="email" className="form-label text-white">
                   Email
                 </label>
                 <input
@@ -117,7 +117,7 @@ export default function Login() {
               </div>
 
               <div className="col-12 mb-4">
-                <label htmlFor="password" className="form-label">
+                <label htmlFor="password" className="form-label text-white">
                   Password
                 </label>
                 <input
@@ -135,8 +135,11 @@ export default function Login() {
                 )}
               </div>
 
-              <div className="col-12">
-                <button type="submit" className="form-control">
+              <div className="col-12 mt-2">
+                <button
+                  type="submit"
+                  className="btn btn-warning text-dark fw-bold w-100 py-2"
+                >
                   Log in
                 </button>
               </div>
