@@ -1,11 +1,32 @@
 import { useState } from "react";
 import { supabase } from "../supabaseClient";
 
+const GENRES = [
+  "Action",
+  "Adventure",
+  "Animation",
+  "Comedy",
+  "Crime",
+  "Documentary",
+  "Drama",
+  "Family",
+  "Fantasy",
+  "History",
+  "Horror",
+  "Music",
+  "Mystery",
+  "Romance",
+  "Science Fiction",
+  "Thriller",
+  "War",
+  "Western",
+];
+
 export default function AddMovie() {
   const [formData, setFormData] = useState({
     title: "",
     year: "",
-    genre: "",
+    genre: [],
     imageUrl: "",
     description: "",
   });
@@ -20,18 +41,14 @@ export default function AddMovie() {
     if (name === "title" && value.trim().length < 2) {
       errorMsg = "Title must be at least 2 characters long.";
     }
-    if (
-      name === "year" &&
-      (Number(value) < 1888 || Number(value) > new Date().getFullYear())
-    ) {
+    if (name === "year" && (Number(value) < 1888 || Number(value) > new Date().getFullYear())) {
       errorMsg = "Please enter a valid year.";
     }
-    if (name === "genre" && value.trim().length < 3) {
-      errorMsg = "Genre must be at least 3 characters long.";
+    if (name === "genre" && value.length === 0) {
+      errorMsg = "Please select at least one genre.";
     }
     if (name === "imageUrl" && !/^https?:\/\/.+/.test(value)) {
-      errorMsg =
-        "Please enter a valid URL (starting with http:// or https://).";
+      errorMsg = "Please enter a valid URL (starting with http:// or https://).";
     }
     if (name === "description" && value.trim().length < 10) {
       errorMsg = "Description must be at least 10 characters long.";
@@ -56,6 +73,32 @@ export default function AddMovie() {
     setErrors({
       ...errors,
       [name]: validate(name, value),
+    });
+  };
+
+  const handleGenreChange = (e) => {
+    const { value, checked } = e.target;
+    let updatedGenres = [...formData.genre];
+
+    if (checked) {
+      updatedGenres.push(value);
+    } else {
+      updatedGenres = updatedGenres.filter((g) => g !== value);
+    }
+
+    setFormData({
+      ...formData,
+      genre: updatedGenres,
+    });
+
+    setTouched({
+      ...touched,
+      genre: true,
+    });
+
+    setErrors({
+      ...errors,
+      genre: validate("genre", updatedGenres),
     });
   };
 
@@ -101,7 +144,7 @@ export default function AddMovie() {
       {
         title: formData.title,
         year: parseInt(formData.year),
-        genre: formData.genre,
+        genre: formData.genre.join(", "),
         imageUrl: formData.imageUrl,
         description: formData.description,
       },
@@ -114,7 +157,7 @@ export default function AddMovie() {
       setFormData({
         title: "",
         year: "",
-        genre: "",
+        genre: [],
         imageUrl: "",
         description: "",
       });
@@ -126,7 +169,7 @@ export default function AddMovie() {
   return (
     <div className="container mt-5 mb-5 pt-5">
       <div className="row justify-content-center">
-        <div className="col-lg-6 col-md-8 col-12">
+        <div className="col-lg-8 col-12">
           <div className="booking bg-white p-5 rounded shadow">
             <h3 className="mb-4 text-center">Add Movie</h3>
 
@@ -136,11 +179,7 @@ export default function AddMovie() {
               </div>
             )}
 
-            <form
-              className="booking-form row"
-              onSubmit={handleSubmit}
-              noValidate
-            >
+            <form className="booking-form row" onSubmit={handleSubmit} noValidate>
               <div className="col-lg-6 col-12 mb-3">
                 <label htmlFor="title" className="form-label">
                   Title
@@ -179,26 +218,35 @@ export default function AddMovie() {
                 )}
               </div>
 
-              <div className="col-lg-6 col-12 mb-3">
-                <label htmlFor="genre" className="form-label">
-                  Genre
-                </label>
-                <input
-                  type="text"
-                  name="genre"
-                  id="genre"
-                  className={`form-control ${touched.genre && errors.genre ? "is-invalid" : ""}`}
-                  placeholder="Action, Drama, Comedy..."
-                  value={formData.genre}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
+              <div className="col-12 mb-3">
+                <label className="form-label">Genre</label>
+                <div
+                  className={`d-flex flex-wrap gap-3 p-3 rounded ${
+                    touched.genre && errors.genre ? "border border-danger" : "border"
+                  }`}
+                >
+                  {GENRES.map((genreItem) => (
+                    <div className="form-check" key={genreItem}>
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id={`genre-${genreItem}`}
+                        value={genreItem}
+                        checked={formData.genre.includes(genreItem)}
+                        onChange={handleGenreChange}
+                      />
+                      <label className="form-check-label" htmlFor={`genre-${genreItem}`}>
+                        {genreItem}
+                      </label>
+                    </div>
+                  ))}
+                </div>
                 {touched.genre && errors.genre && (
-                  <div className="invalid-feedback">{errors.genre}</div>
+                  <div className="text-danger small mt-1">{errors.genre}</div>
                 )}
               </div>
 
-              <div className="col-lg-6 col-12 mb-3">
+              <div className="col-12 mb-3">
                 <label htmlFor="imageUrl" className="form-label">
                   Poster (URL)
                 </label>
