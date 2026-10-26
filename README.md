@@ -21,6 +21,20 @@ FlickHub is a modern movie catalog web application built with **React**, **Vite*
 
 ---
 
+## 📋 Functional Guide
+
+| Page / View       | Route              | Access Level | Description                                                 |
+| :---------------- | :----------------- | :----------- | :---------------------------------------------------------- |
+| **Home**          | `/`                | Public (All) | Welcoming overview and introduction to the platform.        |
+| **Catalogue**     | `/movies`          | Public (All) | List of all added movies with real-time browsing.           |
+| **Movie Details** | `/movies/:id`      | Public (All) | Detailed view of a specific movie. Authors can edit/delete. |
+| **Login**         | `/login`           | Guests Only  | User login form with client-side validation.                |
+| **Register**      | `/register`        | Guests Only  | User registration form with validation.                     |
+| **Add Movie**     | `/add-movie`       | Users Only   | Form to create a new movie entry in the database.           |
+| **Edit Movie**    | `/movies/:id/edit` | Owner Only   | Form to update an existing movie created by the user.       |
+
+---
+
 ## 🛠️ Tech Stack
 
 - **Frontend Library:** React (v19)
