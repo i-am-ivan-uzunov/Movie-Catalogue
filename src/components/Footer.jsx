@@ -1,56 +1,52 @@
 export default function Footer() {
   return (
-    <>
-      <footer className="site-footer section-padding">
-        <div className="container">
-          <div className="row">
-            <div className="col-12">
-              <h4 className="text-white mb-4 me-5">FlickHub</h4>
-            </div>
+    <footer className="bg-black text-white py-5 border-top border-secondary mt-auto">
+      <div className="container">
+        <div className="row justify-content-center text-center">
+          <div className="col-lg-8 col-12">
+            <h3 className="text-white fw-bold mb-3 tracking-wide">FlickHub</h3>
+            <p className="text-muted mb-4 small">
+              Your ultimate destination to discover, share, and track the best
+              movies.
+            </p>
 
-            
-
-            <div className="col-lg-4 col-md-5 col-xs-12 tooplate-mt30">
-              <p>
-                Tel:{" "}
-                <a href="tel: 010-02-0340" className="tel-link">
-                  032 6589
+            <ul className="list-unstyled d-flex justify-content-center gap-4 mb-4">
+              <li>
+                <a href="#" className="text-warning fs-4 text-decoration-none">
+                  <i className="bi bi-facebook"></i>
                 </a>
-              </p>
-            </div>
+              </li>
+              <li>
+                <a href="#" className="text-warning fs-4 text-decoration-none">
+                  <i className="bi bi-instagram"></i>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://twitter.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-warning fs-4 text-decoration-none"
+                >
+                  <i className="bi bi-twitter"></i>
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-warning fs-4 text-decoration-none">
+                  <i className="bi bi-youtube"></i>
+                </a>
+              </li>
+            </ul>
 
-            <div className="col-lg-4 col-md-6 col-xs-12 tooplate-mt30">
-              <h6 className="text-white mb-lg-4 mb-3">Social</h6>
+            <hr className="border-secondary opacity-25 w-50 mx-auto my-4" />
 
-              <ul className="social-icon">
-                <li>
-                  <a href="#" className="social-icon-link bi-facebook"></a>
-                </li>
-
-                <li>
-                  <a href="#" className="social-icon-link bi-instagram"></a>
-                </li>
-
-                <li>
-                  <a
-                    href="https://twitter.com/search?q=tooplate.com&src=typed_query&f=live"
-                    target="_blank"
-                    className="social-icon-link bi-twitter"
-                  ></a>
-                </li>
-
-                <li>
-                  <a href="#" className="social-icon-link bi-youtube"></a>
-                </li>
-              </ul>
-
-              <p className="copyright-text tooplate-mt60">
-                Copyright © 2022 FlickHub Co., Ltd.
-              </p>
-            </div>
+            <p className="text-muted small mb-0">
+              Copyright © {new Date().getFullYear()} FlickHub Co., Ltd. All
+              rights reserved.
+            </p>
           </div>
         </div>
-      </footer>
-    </>
+      </div>
+    </footer>
   );
 }

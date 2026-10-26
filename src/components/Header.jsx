@@ -17,21 +17,20 @@ export default function Header() {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg bg-dark navbar-dark border-bottom border-secondary shadow-lg">
+    <nav className="navbar navbar-expand-lg bg-black navbar-dark border-bottom border-secondary shadow-lg sticky-top">
       <div className="container">
         <button className="navbar-toggler" type="button" onClick={toggleNav}>
           <span className="navbar-toggler-icon"></span>
         </button>
 
         <Link
-          className="navbar-brand text-white fw-bold"
+          className="navbar-brand text-white fw-bold fs-4"
           to="/"
           onClick={closeNav}
         >
           FlickHub
         </Link>
 
-        {/* Мобилно меню - бутони и аватар в дясно */}
         <div className="d-lg-none d-flex align-items-center gap-2">
           {user ? (
             <div className="d-flex align-items-center gap-2">
@@ -76,18 +75,18 @@ export default function Header() {
         >
           <ul className="navbar-nav mx-auto">
             <li className="nav-item">
-              <Link className="nav-link" to="/" onClick={closeNav}>
+              <Link className="nav-link text-light" to="/" onClick={closeNav}>
                 Home
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/catalogue" onClick={closeNav}>
+              <Link className="nav-link text-light" to="/catalogue" onClick={closeNav}>
                 Catalogue
               </Link>
             </li>
             {user && (
               <li className="nav-item">
-                <Link className="nav-link" to="/add-movie" onClick={closeNav}>
+                <Link className="nav-link text-light" to="/add-movie" onClick={closeNav}>
                   Add Movie
                 </Link>
               </li>
@@ -95,13 +94,12 @@ export default function Header() {
           </ul>
         </div>
 
-        {/* Десктоп меню - бутони и аватар в дясно от Logout */}
         <div className="d-none d-lg-flex align-items-center gap-3">
           {user ? (
             <div className="d-flex align-items-center gap-3">
               <button
                 onClick={handleLogout}
-                className="custom-btn btn btn-warning text-dark fw-bold"
+                className="custom-btn btn btn-warning text-dark fw-bold px-4"
               >
                 Logout
               </button>
@@ -119,13 +117,13 @@ export default function Header() {
             <>
               <Link
                 to="/login"
-                className="custom-btn btn btn-warning text-dark fw-bold"
+                className="custom-btn btn btn-warning text-dark fw-bold px-4"
               >
                 Login
               </Link>
               <Link
                 to="/register"
-                className="custom-btn btn btn-warning text-dark fw-bold"
+                className="custom-btn btn btn-warning text-dark fw-bold px-4"
               >
                 Register
               </Link>

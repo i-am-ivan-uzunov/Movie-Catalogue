@@ -25,7 +25,7 @@ const GENRES = [
 
 export default function AddMovie() {
   const { user } = useContext(AuthContext);
-
+  
   const [formData, setFormData] = useState({
     title: "",
     year: "",
@@ -44,18 +44,14 @@ export default function AddMovie() {
     if (name === "title" && value.trim().length < 2) {
       errorMsg = "Title must be at least 2 characters long.";
     }
-    if (
-      name === "year" &&
-      (Number(value) < 1888 || Number(value) > new Date().getFullYear())
-    ) {
+    if (name === "year" && (Number(value) < 1888 || Number(value) > new Date().getFullYear())) {
       errorMsg = "Please enter a valid year.";
     }
     if (name === "genre" && value.length === 0) {
       errorMsg = "Please select at least one genre.";
     }
     if (name === "imageUrl" && !/^https?:\/\/.+/.test(value)) {
-      errorMsg =
-        "Please enter a valid URL (starting with http:// or https://).";
+      errorMsg = "Please enter a valid URL (starting with http:// or https://).";
     }
     if (name === "description" && value.trim().length < 10) {
       errorMsg = "Description must be at least 10 characters long.";
@@ -66,21 +62,9 @@ export default function AddMovie() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-
-    setTouched({
-      ...touched,
-      [name]: true,
-    });
-
-    setErrors({
-      ...errors,
-      [name]: validate(name, value),
-    });
+    setFormData({ ...formData, [name]: value });
+    setTouched({ ...touched, [name]: true });
+    setErrors({ ...errors, [name]: validate(name, value) });
   };
 
   const handleGenreChange = (e) => {
@@ -93,34 +77,15 @@ export default function AddMovie() {
       updatedGenres = updatedGenres.filter((g) => g !== value);
     }
 
-    setFormData({
-      ...formData,
-      genre: updatedGenres,
-    });
-
-    setTouched({
-      ...touched,
-      genre: true,
-    });
-
-    setErrors({
-      ...errors,
-      genre: validate("genre", updatedGenres),
-    });
+    setFormData({ ...formData, genre: updatedGenres });
+    setTouched({ ...touched, genre: true });
+    setErrors({ ...errors, genre: validate("genre", updatedGenres) });
   };
 
   const handleBlur = (e) => {
     const { name, value } = e.target;
-
-    setTouched({
-      ...touched,
-      [name]: true,
-    });
-
-    setErrors({
-      ...errors,
-      [name]: validate(name, value),
-    });
+    setTouched({ ...touched, [name]: true });
+    setErrors({ ...errors, [name]: validate(name, value) });
   };
 
   const handleSubmit = async (e) => {
@@ -182,23 +147,14 @@ export default function AddMovie() {
             <h3 className="mb-4 text-center text-white fw-bold">Add Movie</h3>
 
             {message && (
-              <div
-                className={`alert ${message.includes("successful") ? "alert-success" : "alert-danger"} text-center`}
-                role="alert"
-              >
+              <div className={`alert ${message.includes("successful") ? "alert-success" : "alert-danger"} text-center`} role="alert">
                 {message}
               </div>
             )}
 
-            <form
-              className="booking-form row"
-              onSubmit={handleSubmit}
-              noValidate
-            >
+            <form className="booking-form row" onSubmit={handleSubmit} noValidate>
               <div className="col-lg-6 col-12 mb-3">
-                <label htmlFor="title" className="form-label text-white">
-                  Title
-                </label>
+                <label htmlFor="title" className="form-label text-white">Title</label>
                 <input
                   type="text"
                   name="title"
@@ -209,15 +165,11 @@ export default function AddMovie() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                {touched.title && errors.title && (
-                  <div className="invalid-feedback">{errors.title}</div>
-                )}
+                {touched.title && errors.title && <div className="invalid-feedback">{errors.title}</div>}
               </div>
 
               <div className="col-lg-6 col-12 mb-3">
-                <label htmlFor="year" className="form-label text-white">
-                  Year
-                </label>
+                <label htmlFor="year" className="form-label text-white">Year</label>
                 <input
                   type="number"
                   name="year"
@@ -228,18 +180,14 @@ export default function AddMovie() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                {touched.year && errors.year && (
-                  <div className="invalid-feedback">{errors.year}</div>
-                )}
+                {touched.year && errors.year && <div className="invalid-feedback">{errors.year}</div>}
               </div>
 
               <div className="col-12 mb-3">
                 <label className="form-label text-white">Genre</label>
                 <div
                   className={`d-flex flex-wrap gap-3 p-3 rounded shadow-sm ${
-                    touched.genre && errors.genre
-                      ? "border border-danger"
-                      : "border border-secondary"
+                    touched.genre && errors.genre ? "border border-danger" : "border border-secondary"
                   }`}
                   style={{ backgroundColor: "#252525" }}
                 >
@@ -254,25 +202,17 @@ export default function AddMovie() {
                         onChange={handleGenreChange}
                         style={{ cursor: "pointer" }}
                       />
-                      <label
-                        className="form-check-label text-white"
-                        htmlFor={`genre-${genreItem}`}
-                        style={{ cursor: "pointer" }}
-                      >
+                      <label className="form-check-label text-white" htmlFor={`genre-${genreItem}`} style={{ cursor: "pointer" }}>
                         {genreItem}
                       </label>
                     </div>
                   ))}
                 </div>
-                {touched.genre && errors.genre && (
-                  <div className="text-danger small mt-1">{errors.genre}</div>
-                )}
+                {touched.genre && errors.genre && <div className="text-danger small mt-1">{errors.genre}</div>}
               </div>
 
               <div className="col-12 mb-3">
-                <label htmlFor="imageUrl" className="form-label text-white">
-                  Poster (URL)
-                </label>
+                <label htmlFor="imageUrl" className="form-label text-white">Poster (URL)</label>
                 <input
                   type="url"
                   name="imageUrl"
@@ -283,15 +223,11 @@ export default function AddMovie() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                {touched.imageUrl && errors.imageUrl && (
-                  <div className="invalid-feedback">{errors.imageUrl}</div>
-                )}
+                {touched.imageUrl && errors.imageUrl && <div className="invalid-feedback">{errors.imageUrl}</div>}
               </div>
 
               <div className="col-12 mb-3">
-                <label htmlFor="description" className="form-label text-white">
-                  Description / Resume
-                </label>
+                <label htmlFor="description" className="form-label text-white">Description / Resume</label>
                 <textarea
                   className={`form-control ${touched.description && errors.description ? "is-invalid" : ""}`}
                   rows="4"
@@ -302,16 +238,11 @@ export default function AddMovie() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 ></textarea>
-                {touched.description && errors.description && (
-                  <div className="invalid-feedback">{errors.description}</div>
-                )}
+                {touched.description && errors.description && <div className="invalid-feedback">{errors.description}</div>}
               </div>
 
               <div className="col-lg-4 col-12 ms-auto mt-3">
-                <button
-                  type="submit"
-                  className="btn btn-warning text-dark fw-bold w-100 py-2"
-                >
+                <button type="submit" className="btn btn-warning text-dark fw-bold w-100 py-2">
                   Add Movie
                 </button>
               </div>
